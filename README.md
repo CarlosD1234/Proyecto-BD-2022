@@ -24,3 +24,10 @@
 |19|UCV Radio 103.5 FM	|http://ucvradio.cl  | NULL|		@ucvradio |	https://www.facebook.com/UCVRadioFM/|	N	|Febrero_2018	|5	|Valparaíso	|CORPORACIÓN DE TELEVISIÓN DE LA PONTIFICIA UNIVERSIDAD CATÓLICA DE VALPARAÍSO	|RAFAEL ALONSO ECHEVERRÍA GONZÁLEZ|	Radio	|
 |20|VTV Yungay	|http://www.canalvtv.cl/|NULL|		@canalvtvcl|	https://www.facebook.com/canal.vtv.1/	|HL	|Febrero_2018|	5	|Aconcagua	|Sociedad de Comunicaciones Salto del Soldado Ltda.|	José Andrés Gálvez V.|	TV Online|
 |21|Radio Valparaíso	|http://www.radiovalparaiso.cl/	|NULL|	@RadioValparaiso |	https://www.facebook.com/valparaisofm|	HL	|Febrero_2018|	5|	Valparaíso|	Corporación de Radio Valparaíso Ltda|	Alfredo Ureta Quintana	|Radio  |	
+
+
+
+
+
+
+
