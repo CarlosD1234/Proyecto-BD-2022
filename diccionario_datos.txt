@@ -1,0 +1,25 @@
+Diccionario de datos
+
+Entidad: Noticia
+	Url: VARCHAR(255)
+	Titulo: VARCHAR(255)
+	Fecha_publicacion: Date
+	Contenido: MEDIUMTEXT
+	Autor: VARCHAR(255)
+Entidad: Prensa
+	Nombre_prensa:  VARCHAR(255)
+	url_prensa: VARCHAR(255)
+	region_prensa: VARCHAR(255)
+	pais_prensa: VARCHAR(255)
+	idioma_prensa: VARCHAR(255)
+Entidad: Dueño
+	Nombre_Dueño: VARCHAR(255)
+	Tipo_Persona_Dueño: VARCHAR(255)
+	Fecha_Dueño:Date
+Entidad: Referencia
+	URL_wikipedia: VARCHAR(255)
+	nombre_Referencia: VARCHAR(255)
+	profesion_referencia: VARCHAR(255)
+	fecha_nacimiento:Date
+	nacionalidad_referencia: Char[250]
+	popularidad_referencia:INT
