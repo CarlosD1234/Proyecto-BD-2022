@@ -7,19 +7,24 @@ Entidad: Noticia
 	Contenido: MEDIUMTEXT
 	Autor: VARCHAR(255)
 Entidad: Prensa
-	Nombre_prensa:  VARCHAR(255)
-	url_prensa: VARCHAR(255)
-	region_prensa: VARCHAR(255)
-	pais_prensa: VARCHAR(255)
-	idioma_prensa: VARCHAR(255)
+	Nombre:  VARCHAR(255)
+	url: VARCHAR(255)
+	region: VARCHAR(255)
+	pais: VARCHAR(255)
+	idioma: VARCHAR(255)
 Entidad: Dueño
-	Nombre_Dueño: VARCHAR(255)
-	Tipo_Persona_Dueño: VARCHAR(255)
-	Fecha_Dueño:Date
+	Nombre: VARCHAR(255)
+	Tipo_Persona: VARCHAR(255)
 Entidad: Referencia
 	URL_wikipedia: VARCHAR(255)
-	nombre_Referencia: VARCHAR(255)
-	profesion_referencia: VARCHAR(255)
+	nombre: VARCHAR(255)
+	profesion: VARCHAR(255)
 	fecha_nacimiento:Date
-	nacionalidad_referencia: Char[250]
-	popularidad_referencia:INT
+	nacionalidad: Char[250]
+Entidad: popularidad
+	fecha: Date
+	valor: INT
+Relacion: Propietario
+	Fecha_Dueño
+Relacion: Publicar
+Relacion: Mencionar

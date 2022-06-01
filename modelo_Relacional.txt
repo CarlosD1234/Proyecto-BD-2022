@@ -1,0 +1,6 @@
+Prensa (PK_nombre_Prensa, PK_Url, region, pais, idioma)
+Dueño(PK_nombre_Dueño, Tipo_persona_ Fecha_Dueño)
+Noticia(PK_Url_Noticia, Titulo, Fecha_publicacion, Contenido, Autor)
+Referencia(URL_wikipedia, PK_nombre_Referencia, profesion, fecha_nacimiento,nacionalidad)
+Propietario(FK_Nombre_Prensa, FK_Nombre_Dueño, Fecha_Dueño)
+Mencionar(FK_Url_Noticia, FK_nombre_referencia)
