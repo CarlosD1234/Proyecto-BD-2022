@@ -22,8 +22,8 @@ cur.execute("CREATE TABLE dueño (nombre_dueño VARCHAR(255) PRIMARY KEY, tipo_p
 cur.execute("CREATE TABLE noticia (url_noticia VARCHAR(255) PRIMARY KEY, titulo VARCHAR(255), fecha_publicacion Date, contenido MEDIUMTEXT, autor VARCHAR(255), id_prensa INT, FOREIGN KEY (id_prensa) REFERENCES prensa (id_prensa))")
 cur.execute("CREATE TABLE referencia (url_wikipedia VARCHAR(255), nombre_referencia VARCHAR(255) PRIMARY KEY, profesion VARCHAR(255), fecha_nacimiento Date, nacionalidad VARCHAR(255))")
 cur.execute("CREATE TABLE popularidad (id_popularidad INT PRIMARY KEY, fecha Date, valor INT, nombre_referencia VARCHAR(255), FOREIGN KEY (nombre_referencia) REFERENCES referencia (nombre_referencia))")
-#cur.execute("CREATE TABLE propietario (nombre_prensa VARCHAR(255), nombre_dueño VARCHAR(255, fecha_dueño Date))")
-#cur.execute("CREATE TABLE mencionar (url_noticia VARCHAR(255), nombre_referencia VARCHAR(255))")
+cur.execute("CREATE TABLE propietario (id_prensa INT, nombre_dueño VARCHAR(255), fecha_dueño Date, FOREIGN KEY (id_prensa) REFERENCES prensa (id_prensa), FOREIGN KEY (nombre_dueño) REFERENCES dueño (nombre_dueño), PRIMARY KEY (id_prensa, nombre_dueño))")
+cur.execute("CREATE TABLE mencionar (url_noticia VARCHAR(255), nombre_referencia VARCHAR(255), FOREIGN KEY (url_noticia) REFERENCES noticia (url_noticia), FOREIGN KEY (nombre_referencia) REFERENCES referencia (nombre_referencia))")
 
 conn.commit()
 conn.close()
