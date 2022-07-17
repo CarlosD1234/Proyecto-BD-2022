@@ -14,9 +14,15 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cur = conn.cursor()
+
+#Crear la base de datos
 query_create = "CREATE DATABASE proyecto_info133"
 cur.execute(query_create)
+
+#Usando la base de datos creada anteriormente
 cur.execute("USE proyecto_info133")
+
+#Crear las tablas
 cur.execute("CREATE TABLE prensa (id_prensa INT PRIMARY KEY, nombre_prensa VARCHAR(255), url VARCHAR(255), region VARCHAR(255), pais VARCHAR(255), idioma VARCHAR(255))")
 cur.execute("CREATE TABLE dueño (nombre_dueño VARCHAR(255) PRIMARY KEY, tipo_persona VARCHAR(255), fecha_dueño Date)")
 cur.execute("CREATE TABLE noticia (url_noticia VARCHAR(255) PRIMARY KEY, titulo VARCHAR(255), fecha_publicacion Date, contenido MEDIUMTEXT, autor VARCHAR(255), id_prensa INT, FOREIGN KEY (id_prensa) REFERENCES prensa (id_prensa))")

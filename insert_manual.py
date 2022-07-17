@@ -15,8 +15,12 @@ except mariadb.Error as e:
     sys.exit(1)
 
 cur = conn.cursor()
+
+#Ejemplo
 print("Usando como ejemplo al medio: La Estrella de Valparaiso")
 cur.execute("USE proyecto_info133")
+
+#Se insertan datos en todas las tablas creadas anteriormente
 cur.execute("INSERT INTO prensa (id_prensa, nombre_prensa, url, region, pais, idioma) VALUES (8, 'La Estrella de Valparaíso', 'http://www.estrellavalpo.cl/', 'V', 'Chile', 'Español')")
 cur.execute("INSERT INTO dueño (nombre_dueño, tipo_persona, fecha_dueño) VALUES ('Agustín Edwards', 'El Mercurio S.A.P', '2016-01-01')")
 cur.execute("INSERT INTO noticia (url_noticia, titulo, fecha_publicacion, contenido, autor, id_prensa) VALUES ('https://www.estrellavalpo.cl/impresa/2019/10/25/full/cuerpo-principal/1/', 'Comercio porteño sufre una hecatombre', '2019-10-25', 'Portada', 'Editor', 8)")

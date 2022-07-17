@@ -53,12 +53,15 @@ for p in list_p:
         text=text+" "+content
 
 
+#Crear una lista vacia
 doc = nlp(text)
 personas = []
 
+#Agregar las personas mencionadas en la noticia a la lista
 for ent in doc.ents:
     if ent.label_ == "PER":
         if ent.text not in personas :
             personas.append(ent.text)
 
+#Imprimir la lista de personas
 print(personas)
