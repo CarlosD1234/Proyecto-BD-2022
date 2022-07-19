@@ -70,12 +70,11 @@ def webSoyChile(n):    #n = cantidad de páginas a scrapear (las primeras n)
                 headers = {'user-agent':random.choice(USER_AGENT_LIST) }
                 response = session.get(URL_SEED_UNITARY,headers=headers)
                 title = response.html.xpath(xpath_title)[0]
-                text = ""
+
 
                 content = response.html.xpath(xpath_text)
                 text = ""
-                if(j==0):
-                        print(content)
+
                 for index in content:
                         content = index.text
                         content = w3lib.html.remove_tags(content)

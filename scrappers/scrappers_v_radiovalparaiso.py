@@ -1,5 +1,7 @@
 #Escribir varios scripts Python que permiten “escrapear” automáticamente algunas noticias de prensa publicadas en los medios de prensa de la región, conservando en particular el URL, la fecha de publicación, el título, el texto de la noticia.
 import random
+from wsgiref.handlers import format_date_time
+from regex import P
 from requests_html import HTMLSession
 import w3lib.html
 import html
@@ -35,8 +37,7 @@ def format_mes(mes):
 def format_date_casero(date):
         # martes 12 julio de 2022 | Publicado a las 10:03 pm · Actualizado a las 10:03 pm
         # DEBE QUEDAR => 2022-07-18
-        date = date.split("|")[0]
-        dia = date.split(" ")[1]
+        dia = date.split(" ")[0]
         mes = date.split(" ")[2]
         mes = format_mes(mes)
         anno = date.split(" ")[4]
@@ -47,11 +48,11 @@ def format_date_casero(date):
 
 def format_date(date):
         return(date.split("T")[0])
-def webElEpicentro():
+def webRadioValparaiso():
         session = HTMLSession()
 
         ## URL "SEED" que escrapear
-        URL_SEED = "https://www.elepicentro.cl/nacional/"
+        URL_SEED = "https://www.radiovalparaiso.cl/"
 
         ## Simular que estamos utilizando un navegador web
         USER_AGENT_LIST = [
@@ -80,46 +81,49 @@ def webElEpicentro():
 
         ## Analizar ("to parse") el contenido
 
-        xpath_url="//div[@class='standar-articlelist'] //a/@href"
+        xpath_url="//div[@class='more-news']//a/@href"
 
         all_urls = response.html.xpath(xpath_url)
-        for i in range(5):
-                all_urls.pop()
-        xpath_title="//div/h1//text()" #/span
-        xpath_date="//div/h6/text()"
 
-        xpath_text="//div[@class='post-content']//p"
+        xpath_title="//div/h1//text()" #/span
+        xpath_date="//*[@id='wrap']/div/div/div/div[1]/div[2]/text()"
+        # xpath_date="//div[@class='date']/i[1]"
+
+        xpath_text="//*[@id='wrap']/div/div/div/div[1]/div[5]/div/div/text()"
         titles=[]
         dates=[]
         texts=[]
-        #print(all_urls)
+        # print(all_urls)
 
         for i in all_urls:
-                URL_SEED_UNITARY = i
-                headers = {'user-agent':random.choice(USER_AGENT_LIST) }
-                response = session.get(URL_SEED_UNITARY,headers=headers)
-                title = response.html.xpath(xpath_title)[0]
-                date = response.html.xpath(xpath_date)[0]
-                date = format_date_casero(date)
+            print(i)
+            URL_SEED_UNITARY = i
+            headers = {'user-agent':random.choice(USER_AGENT_LIST) }
+            response = session.get(URL_SEED_UNITARY,headers=headers)
+            title = response.html.xpath(xpath_title)[0]
+            date = response.html.xpath(xpath_date)[0]
+            date = date[1:]
+            date = format_date_casero(date)
 
-                text = ""
+            contentL = response.html.xpath(xpath_text)
+            text = ""
 
-                content = response.html.xpath(xpath_text)
-                text = ""
-                for index in content:
-                        content = index.text
-                        content = w3lib.html.remove_tags(content)
-                        content = w3lib.html.replace_escape_chars(content)
-                        content = html.unescape(content)
-                        content = content.strip()
-                        text=text+" "+content
+            for index in contentL:
 
-                titles.append(title)
+                content = index
+                content = w3lib.html.remove_tags(content)
+                content = w3lib.html.replace_escape_chars(content)
+                content = html.unescape(content)
+                content = content.strip()
+                text=text+" "+content
+
+            titles.append(title)
                 
-                dates.append(date)
-                texts.append(text)
+            dates.append(date)
+            texts.append(text)
+
         print("\n ---------------------------------------\n ")
-        print('Scrapper hecho en elEpicentro.cl correctamente')
+        print('Scrapper hecho en RadioValparaiso correctamente')
         print("\n --------------------------------------- ")
         return all_urls, dates, title, text
-webElEpicentro()
+webRadioValparaiso()
