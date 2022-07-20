@@ -1,6 +1,5 @@
 #A partir de sus scripts anteriores, automatizar los procesos para insertar datos en su base de datos.
 
-from ctypes import sizeof
 import mariadb
 import sys
 import random
