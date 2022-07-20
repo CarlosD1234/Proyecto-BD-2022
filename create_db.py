@@ -2,6 +2,7 @@
 import mariadb
 import sys
 
+#Se utiliza un usuario root sin contraseña
 try:
     conn = mariadb.connect(
         user="root",
