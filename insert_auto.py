@@ -1,5 +1,8 @@
 #A partir de sus scripts anteriores, automatizar los procesos para insertar datos en su base de datos.
 
+from ctypes import sizeof
+import mariadb
+import sys
 import random
 from requests_html import HTMLSession
 import w3lib.html
@@ -107,6 +110,7 @@ for text in texts:
 popularidad = [] #Dato N°6
 fecha_nacimiento = [] #Dato N°7
 profesion = [] #Dato N°8
+urls_wikipedia = [] #Dato N°9
 wikipedia.set_lang("es")
 ES_MODEL_LANGUAGE="mrm8488/bert-base-spanish-wwm-cased-finetuned-spa-squad2-es"
 tokenizer_es_language = AutoTokenizer.from_pretrained(ES_MODEL_LANGUAGE)
@@ -134,13 +138,14 @@ for persona in personas:
                 promedio_popularidad.append(views)
         promedio_popularidad = sum(promedio_popularidad)/len(promedio_popularidad)
         popularidad.append(promedio_popularidad)
+        urls_wikipedia.append(wikipedia.page(persona_mayus).url)
     except:
         print("Página no encontrada")
 
 print(popularidad)
 print(fecha_nacimiento)
 print(profesion)
-
+print(urls_wikipedia)
 #Arreglamos las fechas obtenidas anteriormente para que sean de la forma YYYY-MM-DD
 formato_fecha = [] #Dato N°7 pero arreglado
 for fecha in fecha_nacimiento:
@@ -180,3 +185,27 @@ for fecha in fecha_nacimiento:
         text=text+fecha_por_partes[0]
     formato_fecha.append(text)
 print(formato_fecha)
+
+try:
+    conn = mariadb.connect(
+        user="root",
+        password="",
+        host="localhost",
+        port=3306
+    )
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
+
+cur = conn.cursor()
+cur.execute("USE proyecto_info133")
+
+# INSERTAR DATO 1-4
+for i in range (len(titles)): 
+    cur.execute("INSERT INTO noticia (url_noticia, titulo, fecha_publicacion, contenido, autor, id_prensa) VALUES ('%s', '%s', '%s', '%s', 'EDITOR', 8)"%(URL[i], titles[i], '2000-01-01', texts[i]))
+
+# INSERTAR DATO 5-9
+for i in range (len(personas)):
+    cur.execute("INSERT INTO referencia (url_wikipedia, nombre_referencia, profesion, fecha_nacimiento, nacionalidad) VALUES ('%s', '%s', '%s', '%s', '%s')"%(urls_wikipedia[i], personas[i], profesion[i], formato_fecha[i], 'Chile'))
+    cur.execute("INSERT INTO popularidad (id_popularidad, fecha, valor, nombre_referencia) VALUES ('%s', '%s', '%s', '%s')"%(i, formato_fecha[i], popularidad[i], personas[i]))
+    cur.execute("INSERT INTO mencionar (url_noticia, nombre_referencia) VALUES ('%s', '%s')"%(URL[i], personas[i]))
